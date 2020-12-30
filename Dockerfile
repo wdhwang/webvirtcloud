@@ -13,17 +13,22 @@ RUN apt-get update -qqy \
     && DEBIAN_FRONTEND=noninteractive apt-get -qyy install \
 	--no-install-recommends \
 	git \
+        virtualenv \
+        python3-virtualenv \
 	python3-venv \
 	python3-dev \
 	python3-lxml \
 	libvirt-dev \
 	zlib1g-dev \
+        libxslt1-dev \
 	nginx \
+        supervisor \
 	pkg-config \
 	gcc \
 	libsasl2-modules \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
+RUN mkdir -p /srv/webvirtcloud
 COPY . /srv/webvirtcloud
 RUN chown -R www-data:www-data /srv/webvirtcloud
 
@@ -47,6 +52,7 @@ RUN printf "\n%s" "daemon off;" >> /etc/nginx/nginx.conf && \
 	chown -R www-data:www-data /var/lib/nginx
 
 COPY conf/nginx/webvirtcloud.conf /etc/nginx/conf.d/
+COPY conf/supervisor/webvirtcloud.conf /etc/supervisor/conf.d
 
 # Register services to runit
 RUN	mkdir /etc/service/nginx && \

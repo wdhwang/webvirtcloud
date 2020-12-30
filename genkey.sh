@@ -17,7 +17,7 @@ cp "$APP_PATH/webvirtcloud/settings.py.template" "$APP_PATH/webvirtcloud/setting
 if [ -e "/etc/timezone" ] ; then
     tzone=\'$(cat /etc/timezone)\'
 else
-    tzone=\'$(Asia/Taipei)\'
+    tzone=\'Asia/Taipei\'
 fi
 secret_key=$(generate_secret_key)
 echo "* Secret for Django generated: $secret_key"

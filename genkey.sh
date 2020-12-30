@@ -14,7 +14,11 @@ END
 echo "* Configuring settings.py file."
 cp "$APP_PATH/webvirtcloud/settings.py.template" "$APP_PATH/webvirtcloud/settings.py"
 
-tzone=\'$(cat /etc/timezone)\'
+if [ -e "/etc/timezone" ] ; then
+    tzone=\'$(cat /etc/timezone)\'
+else
+    tzone="Asia/Taipei"
+fi
 secret_key=$(generate_secret_key)
 echo "* Secret for Django generated: $secret_key"
 novncd_port=6080

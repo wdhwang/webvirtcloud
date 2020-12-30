@@ -93,6 +93,10 @@ p {
     margin-top: 20px;
 }
 
+#ft {
+    margin-top: 20px;
+}
+
 .flot-chart {
     max-height: 250px;
 }

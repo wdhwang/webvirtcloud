@@ -41,6 +41,20 @@
             title="{% trans "Console" %}">
             <span class="fa fa-eye"></span>
         </button>
+        <form>
+            <button class="btn btn-sm btn-secondary" type="button" title="{% trans "Fault Tolerant" %}" onclick='open_ft_page("{{ instance.id }}", "{{ instance.compute.name }}", compute2_name.value)' >
+                <span class="fa fa-flash"></span>
+            </button>
+            <select name="compute2_name">
+            {% if computes_count != 1 %}
+                {% for comp in computes %}
+                    {% if comp.id != compute.id %}
+                    <option value="{{ comp.name }} "> {{ comp.name }} </option>
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+            </select>
+        </form>
     {% endif %}
 </form>
 {% block script %}
@@ -48,6 +62,20 @@
     function open_console(uuid) {
         url = '{% url 'console' %}?token=' + uuid + '';
         window.open(url, '', 'width=850,height=650')
+    }
+</script>
+
+<script>
+    function open_ft_page(pk, compute1_name, compute2_name) {
+        let compute1 = compute1_name.replace(/ /g, "");
+        let compute2 = compute2_name.replace(/ /g, "");
+        var res = location.href.includes("instances");
+        if (res) {
+            url = "ft_enable1/" +pk+ "/" + compute1 + "/" +compute2 + "/";
+        } else {
+            url = "instances/ft_enable1/" +pk+ "/" + compute1 + "/" +compute2 + "/";
+        }
+        window.location.href = url;
     }
 </script>
 {% endblock script %}

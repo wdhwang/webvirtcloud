@@ -291,6 +291,112 @@ def force_off(request, pk):
     return redirect(request.META.get("HTTP_REFERER"))
 
 
+def ft_enable1(request, pk, compute1_name, compute2_name):
+    import requests
+
+    instance = get_instance(request.user, pk)
+    jsonstr = json.dumps({"domName": instance.name, "fromHost": compute1_name, "destHost": compute2_name})
+
+    try:
+        url = 'http://'+compute1_name+':8496/queryFTStatus'
+        resp = requests.post(url, data=jsonstr, headers={"Content-Type":"application/json"})
+        retval = json.loads(resp.text)
+        statmsg = retval['message']
+    except Exception as e:
+        statmsg = ""
+        pass
+
+    if statmsg == 'disableFT':
+        try:
+            url = 'http://'+compute1_name+':8496/enableFT'
+            resp = requests.post(url, data=jsonstr, headers={"Content-Type":"application/json"})
+        except Exception as e:
+            pass
+        addlogmsg(request.user.username, instance.name, _("Enable FaultTolerant"))
+        return redirect(request.META.get('HTTP_REFERER'))
+
+    return render(
+        request,
+        'instances/ft_instance_form.html',
+        {
+            'instance': instance,
+            'action': 'enable',
+        },
+    )
+
+
+def ft_enable(request, pk):
+    import requests
+
+    instance = get_instance(request.user, pk)
+    compute1_name = request.POST.get('compute1_name', '')
+    compute2_name = request.POST.get('compute2_name', '')
+    jsonstr = json.dumps({"domName": instance.name, "fromHost": compute1_name, "destHost": compute2_name})
+
+    try:
+        url = 'http://'+compute1_name+':8496/queryFTStatus'
+        resp = requests.post(url, data=jsonstr, headers={"Content-Type":"application/json"})
+        retval = json.loads(resp.text)
+        statmsg = retval['message']
+    except Exception as e:
+        statmsg = ""
+        pass
+
+    if statmsg == 'disableFT':
+        try:
+            url = 'http://'+compute1_name+':8496/enableFT'
+            resp = requests.post(url, data=jsonstr, headers={"Content-Type":"application/json"})
+        except Exception as e:
+            pass
+        addlogmsg(request.user.username, instance.name, _("Enable FaultTolerant"))
+        return redirect(request.META.get('HTTP_REFERER'))
+
+    return render(
+        request,
+        'instances/ft_instance_form.html',
+        {
+            'instance': instance,
+            'action': 'enable',
+        },
+    )
+
+
+def ft_disable(request, pk):
+    import requests
+
+    instance = get_instance(request.user, pk)
+    compute1_name = request.POST.get('compute1_name', '')
+    compute2_name = request.POST.get('compute2_name', '')
+    jsonstr = json.dumps({"domName": instance.name, "fromHost": compute1_name, "destHost": compute2_name})
+
+    try:
+        url = 'http://'+compute1_name+':8496/queryFTStatus'
+        resp = requests.post(url, data=jsonstr, headers={"Content-Type":"application/json"})
+        retval = json.loads(resp.text)
+        statmsg = retval['message']
+    except Exception as e:
+        statmsg = ""
+        pass
+
+    if statmsg == 'enableFT':
+        try:
+            url = 'http://'+compute2_name+':8496/disableFT'
+            resp = requests.post(url, data=jsonstr, headers={"Content-Type":"application/json"})
+        except Exception as e:
+            pass
+        addlogmsg(request.user.username, instance.name, _("Disable FaultTolerant"))
+        return redirect(request.META.get('HTTP_REFERER'))
+
+    return render(
+        request,
+        'instances/ft_instance_form.html',
+        {
+            'instance': instance,
+            'action': 'disable',
+        },
+    )
+
+
 def destroy(request, pk):
     instance = get_instance(request.user, pk)
     try:

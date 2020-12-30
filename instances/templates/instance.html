@@ -114,6 +114,12 @@
                             {% trans "Stats" %}
                         </a>
                     </li>
+                    <li class="nav-item">
+                        <a href="#ft" class="nav-link action-button" aria-controls="ft" role="tab" data-toggle="tab">
+                            <span id="action-block" class="fa fa-flash" aria-hidden="true"></span>
+                            {% trans "FaultTolerant" %}
+                        </a>
+                    </li>
                      <li class="nav-item">
                         <a href="#undefine" class="nav-link action-button" aria-controls="undefine" role="tab" data-toggle="tab">
                             <span id="action-block" class="fa fa-trash" aria-hidden="true"></span>
@@ -129,6 +135,7 @@
                     {% include 'instances/snapshots_tab.html' %}
                     {% include 'instances/settings_tab.html' %}
                     {% include 'instances/stats_tab.html' %}
+                    {% include 'instances/ft_tab.html' %}
                     {% include 'instances/destroy_tab.html' %}
                 </div>
             </div>
@@ -717,6 +724,14 @@
         var btn = $('#snapshots>div>ul>li>a');
         $(btn).each(function () {
             if ($(this).attr('href') === hash) {
+                $(this).trigger('click');
+            }
+        });
+    }
+    if (~$.inArray(hash, ['#enable', "#disable"])) {
+        var btnsect = $('#navbtn>li>a');
+        $(btnsect).each(function () {
+            if ($(this).attr('href') === '#ft') {
                 $(this).trigger('click');
             }
         });

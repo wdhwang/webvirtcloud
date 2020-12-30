@@ -36,6 +36,7 @@ RUN python3 -m venv venv && \
 	pip3 install -r conf/requirements.txt && \
 	chown -R www-data:www-data /srv/webvirtcloud
 
+RUN ["/bin/bash", "/srv/webvirtcloud/genkey.sh"]
 RUN . venv/bin/activate && \
     python3 manage.py migrate && \
 	chown -R www-data:www-data /srv/webvirtcloud

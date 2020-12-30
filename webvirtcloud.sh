@@ -67,7 +67,7 @@ fi
 clear
 
 readonly APP_USER="wvcuser"
-readonly APP_REPO_URL="https://github.com/retspen/webvirtcloud.git"
+readonly APP_REPO_URL="https://github.com/wdhwang/webvirtcloud.git"
 readonly APP_NAME="webvirtcloud"
 readonly APP_PATH="/srv/$APP_NAME"
 

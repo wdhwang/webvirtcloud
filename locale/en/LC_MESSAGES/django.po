@@ -5840,3 +5840,36 @@ msgstr ""
 #, python-format
 msgid "libvirt Error - %(exception)s"
 msgstr ""
+
+##########################################################################
+# Added by wdhwang at 2020/12/31
+##########################################################################
+#: instances/templates/instance.html:113
+#: instances/templates/instances/ft_tab.html:20
+msgid "FaultTolerant"
+msgstr ""
+
+#: instances/templates/instances/ft_tab.html:9
+msgid "Enable FaultTolerant"
+msgstr ""
+
+#: instances/templates/instances/ft_tab.html:14
+msgid "Disable FaultTolerant"
+msgstr ""
+
+#: instances/templates/instances/ft_tab.html:39
+#: instances/templates/instances/ft_tab.html:67
+msgid "Backup host"
+msgstr ""
+
+#: instances/templates/instances/ft_tab.html:29
+msgid "This action enables the instance fault tolerance. Both host servers must have equal settings and OS type."
+msgstr ""
+
+#: instances/templates/instances/ft_tab.html:57
+msgid "This action disables the instance fault tolerance."
+msgstr ""
+
+#: instances/templates/instances/ft_tab.html:86
+msgid "This action needs the instance on booted and running status."
+msgstr ""

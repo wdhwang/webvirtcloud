@@ -1,0 +1,91 @@
+{% load i18n %}
+<div role="tabpanel" class="tab-pane" id="ft">
+    <div role="tabpanel">
+        <!-- Nav tabs -->
+        <ul class="nav nav-tabs" role="tablist" aria-label="Instance FaultTolerant actions">
+            {% if instance.status == 1 %}
+                <li class="nav-item">
+                    <a class="nav-link text-secondary active" href="#ft_enable" aria-controls="ft_enable" role="tab" data-toggle="tab">
+                        {% trans "Enable FaultTolerant" %}
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-secondary" href="#ft_disable" aria-controls="ft_disable" role="tab" data-toggle="tab">
+                        {% trans "Disable FaultTolerant" %}
+                    </a>
+                </li>
+	    {% else %}
+                <li class="nav-item">
+                    <a class="nav-link text-secondary active" href="#ft" aria-controls="ft" role="tab" data-toggle="tab">
+                        {% trans "FaultTolerant" %}
+                    </a>
+                </li>
+	    {% endif %}
+        </ul>
+        <!-- Tab panes -->
+        <div class="tab-content">
+            {% if instance.status == 1 %}
+                <div role="tabpanel" class="tab-pane tab-pane-bordered active" id="ft_enable">
+                    <p>{% trans "This action enables the instance fault tolerance. Both host servers must have equal settings and OS type" %}</p>
+                    <form action="{% url 'instances:ft_enable' instance.id %}" method="post" role="form" aria-label0="fault tolerant instance form">
+                        {% csrf_token %}
+                        <div class="form-group row">
+                            <label class="col-sm-3 col-form-label">{% trans "Original host" %}</label>
+                            <div class="col-sm-6">
+		                <input id="compute1_name" type="text" class="form-control" name="compute1_name" value={{ compute.name }} readonly={{ compute.name }}/>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-3 col-form-label">{% trans "Host migration" %}</label>
+                            <div class="col-sm-6">
+                                <select name="compute2_name" class="custom-select">
+                                    {% if computes_count != 1 %}
+                                        {% for comp in computes %}
+                                            {% if comp.id != compute.id %}
+                                                <option value="{{ comp.name }}">{{ comp.name }}</option>
+                                            {% endif %}
+                                        {% endfor %}
+                                    {% endif %}
+                                </select>
+                            </div>
+                        </div>
+                        <input type="submit" name="ft_enable" class="btn btn-lg btn-success float-right" value="{% trans "Enable" %}">
+                        <div class="clearfix"></div>
+                    </form>
+                </div>
+                <div role="tabpanel" class="tab-pane tab-pane-bordered" id="ft_disable">
+                    <p>{% trans "This action disables the instance fault tolerance." %}</p>
+                    <form action="{% url 'instances:ft_disable' instance.id %}" method="post" role="form" aria-label0="fault tolerant instance form">
+                        {% csrf_token %}
+                        <div class="form-group row">
+                            <label class="col-sm-3 col-form-label">{% trans "Original host" %}</label>
+                            <div class="col-sm-6">
+                                <input id="compute1_name" type="text" class="form-control" name="compute1_name" value={{ compute.name }} readonly={{ compute.name }}/>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-3 col-form-label">{% trans "Backup host" %}</label>
+                            <div class="col-sm-6">
+                                <select name="compute2_name" class="custom-select">
+                                    {% if computes_count != 1 %}
+                                        {% for comp in computes %}
+                                            {% if comp.id != compute.id %}
+                                                <option value="{{ comp.name }}">{{ comp.name }}</option>
+                                            {% endif %}
+                                        {% endfor %}
+                                    {% endif %}
+                                </select>
+                            </div>
+                        </div>
+                        <input type="submit" name="ft_disable" class="btn btn-lg btn-success float-right" value="{% trans "Disable" %}">
+                        <div class="clearfix"></div>
+                    </form>
+                </div>
+	    {% else %}
+                <div role="tabpanel" class="tab-pane tab-pane-bordered active" id="ft">
+                    <p>{% trans "This action needs the instance on booted and running status." %}</p>
+                </div>
+	    {% endif %}
+        </div>
+    </div>
+</div>

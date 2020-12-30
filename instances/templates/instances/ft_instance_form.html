@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% block title %}
+{% trans "FaultTolerant" %}
+{% endblock title %}
+
+{% block page_header %}
+{% trans "FaultTolerant instance" %} {{ instance }}
+{% endblock page_header %}
+
+{% block content %}
+    {% if action == 'enable' %}
+        <div class="alert alert-danger">
+            {% trans "You cannot enable fault tolerance again!" %}
+        </div>
+    {% else %}
+        <div class="alert alert-danger">
+            {% trans "You cannot disable fault tolerance!" %}
+        </div>
+    {% endif %}
+{% endblock content %}

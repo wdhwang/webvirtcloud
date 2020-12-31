@@ -22,7 +22,6 @@ RUN apt-get update -qqy \
 	zlib1g-dev \
         libxslt1-dev \
 	nginx \
-        supervisor \
 	pkg-config \
 	gcc \
 	libsasl2-modules \
@@ -54,7 +53,6 @@ RUN printf "\n%s" "daemon off;" >> /etc/nginx/nginx.conf && \
 	chown -R www-data:www-data /var/lib/nginx
 
 COPY conf/nginx/webvirtcloud.conf /etc/nginx/conf.d/
-COPY conf/supervisor/webvirtcloud.conf /etc/supervisor/conf.d
 
 # Register services to runit
 RUN	mkdir -p /etc/service/nginx && \

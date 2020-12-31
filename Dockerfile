@@ -1,4 +1,4 @@
-FROM docker.io/library/ubuntu:bionic
+FROM phusion/baseimage:18.04-1.0.0
 
 EXPOSE 80
 EXPOSE 6080

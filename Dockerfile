@@ -26,6 +26,7 @@ RUN apt-get update -qqy \
 	pkg-config \
 	gcc \
 	libsasl2-modules \
+	python3-guestfs \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 RUN mkdir -p /srv/webvirtcloud
@@ -44,6 +45,7 @@ RUN python3 -m venv venv && \
 RUN ["/bin/bash", "/srv/webvirtcloud/genkey.sh"]
 RUN . venv/bin/activate && \
     python3 manage.py migrate && \
+    python3 manage.py makemigrations && \
 	chown -R www-data:www-data /srv/webvirtcloud
 
 # Setup Nginx
